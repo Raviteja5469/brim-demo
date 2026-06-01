@@ -15,15 +15,15 @@ import { mkdirSync, rmSync, readdirSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 
 const FFMPEG = process.env.FFMPEG || "ffmpeg";
-const INPUT = resolve("assets/yt-video.mp4");
+const INPUT = resolve("assets/yt-optimized-video.mp4");
 const OUT = resolve("public/sequence");
 
 // ── Tunables ──────────────────────────────────────────────────────────────
-const START = 1.0; // seconds — skip the very first frames
-const DURATION = 13.5; // seconds of footage to capture (brand-free window)
-const FPS = 12; // frames per second of source → ~162 frames total
-const WIDTH = 1280; // output width (height auto, keeps aspect)
-const QUALITY = 3; // ffmpeg -q:v (2=best … 31=worst); 3 ≈ crisp + small
+const START = 0.0; // seconds — the trimmed clip is relevant start-to-end
+const DURATION = 14.3; // seconds of footage to capture (full clip)
+const FPS = 16; // frames per second of source → ~229 frames total
+const WIDTH = 1280; // output width (downscaled from 1080p; height auto)
+const QUALITY = 4; // ffmpeg -q:v (2=best … 31=worst); 4 ≈ crisp + lean
 // ──────────────────────────────────────────────────────────────────────────
 
 rmSync(OUT, { recursive: true, force: true });
