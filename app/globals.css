@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ------------------------------------------------------------------ */
+/*  Design tokens (Tailwind v4 @theme)                                 */
+/*  Brand = monochrome B/W "UI frame" + warm, vibrant food accents.    */
+/*  Font vars (--font-anton / --font-inter) are injected by next/font  */
+/*  on <html> in app/layout.tsx.                                       */
+/* ------------------------------------------------------------------ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Typography */
+  --font-display: var(--font-anton); /* Anton — giant uppercase headings */
+  --font-sans: var(--font-inter); /* Inter — body / UI */
+
+  /* Monochrome UI palette */
+  --color-ink: #0a0a0a; /* near-black page base */
+  --color-ink-soft: #161616; /* raised surfaces */
+  --color-paper: #f6f5f3; /* off-white text */
+  --color-ash: #9a9a96; /* muted text */
+
+  /* Warm "food pop" accent — the Brim flame */
+  --color-brim: #ff5a1f;
+  --color-brim-deep: #c2410c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+:root {
+  color-scheme: dark;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Offset anchor jumps so content doesn't hide under the floating nav. */
+  scroll-padding-top: 6rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Lenis smooth scroll (driven by GSAP ticker in SmoothScroll.tsx)    */
+/* ------------------------------------------------------------------ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reusable brand helpers                                             */
+/* ------------------------------------------------------------------ */
+
+/* Horizontal black/white strips — the signature Brim backdrop. */
+.brim-stripes {
+  background-image: repeating-linear-gradient(
+    180deg,
+    #000 0,
+    #000 26px,
+    #131313 26px,
+    #131313 52px
+  );
+}
+
+/* Radial vignette so the stripes never overpower the food in center. */
+.brim-vignette {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 45%,
+    transparent 0%,
+    rgba(0, 0, 0, 0.55) 70%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
 }
