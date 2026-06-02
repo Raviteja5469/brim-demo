@@ -259,66 +259,74 @@ export function HowItsMade() {
   }, [count]);
 
   return (
-    <section
-      ref={sectionRef}
-      id="how-its-made"
-      className="relative h-dvh overflow-hidden bg-black"
-    >
-      {/* Sequence canvas. Saturated + lifted a touch so the food pops. */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-10 h-full w-full opacity-0"
-        style={{ filter: "saturate(1.22) contrast(1.06) brightness(1.04)" }}
-      />
+    // Stable wrapper. ScrollTrigger's `pin` re-parents the <section> into a
+    // pin-spacer it injects *inside this div*. On route changes React only ever
+    // removes this outer <div> (which GSAP never touches and whose parent really
+    // is <main>), carrying the re-parented section away with it — so React never
+    // calls removeChild() on the section from the wrong parent, which is what
+    // threw "Failed to execute 'removeChild' on 'Node'" when navigating away.
+    <div>
+      <section
+        ref={sectionRef}
+        id="how-its-made"
+        className="relative h-dvh overflow-hidden bg-black"
+      >
+        {/* Sequence canvas. Saturated + lifted a touch so the food pops. */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 z-10 h-full w-full opacity-0"
+          style={{ filter: "saturate(1.22) contrast(1.06) brightness(1.04)" }}
+        />
 
-      {/* Soft cinematic vignette — darkens only the far edges so the centre
-          food stays bright + in focus (gentler than the page-wide one). */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 z-20"
-        style={{
-          background:
-            "radial-gradient(ellipse 82% 78% at 50% 48%, transparent 42%, rgba(0,0,0,0.5) 100%)",
-        }}
-      />
-
-      {/* Intro headline (not fixed — it clears as you scroll into the cook). */}
-      <div className="intro pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center px-6 text-center">
-        <p className="mb-4 text-xs font-semibold uppercase tracking-[0.4em] text-brim">
-          How it&apos;s made
-        </p>
-        <h2 className="max-w-4xl font-display text-4xl uppercase leading-[0.95] text-paper [text-shadow:0_4px_40px_rgba(0,0,0,0.75)] sm:text-6xl">
-          Wanna know how these big, juicy burgers are made?
-        </h2>
-        <p className="mt-6 text-xs uppercase tracking-[0.35em] text-paper/55">
-          Keep scrolling ↓
-        </p>
-      </div>
-
-      {/* Phase captions — larger glass cards with a line of detail. */}
-      {CAPTIONS.map((c) => (
+        {/* Soft cinematic vignette — darkens only the far edges so the centre
+            food stays bright + in focus (gentler than the page-wide one). */}
         <div
-          key={c.cls}
-          className={`cap ${c.cls} glass pointer-events-none absolute z-30 flex max-w-[21rem] flex-col gap-3 rounded-3xl p-6 opacity-0 shadow-2xl shadow-black/50 ${c.pos}`}
-        >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brim">
-            {c.kicker}
-          </span>
-          <h3 className="font-display text-4xl uppercase leading-[0.92] text-paper sm:text-5xl">
-            {c.title}
-          </h3>
-          <p className="text-[0.95rem] leading-relaxed text-paper/80">{c.copy}</p>
-        </div>
-      ))}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-20"
+          style={{
+            background:
+              "radial-gradient(ellipse 82% 78% at 50% 48%, transparent 42%, rgba(0,0,0,0.5) 100%)",
+          }}
+        />
 
-      {/* Loading veil until all frames are in memory (prevents flicker). */}
-      {!ready && (
-        <div className="absolute inset-0 z-40 grid place-items-center bg-black">
-          <span className="font-display text-sm uppercase tracking-[0.4em] text-paper/60">
-            Firing up the griddle…
-          </span>
+        {/* Intro headline (not fixed — it clears as you scroll into the cook). */}
+        <div className="intro pointer-events-none absolute inset-0 z-30 flex flex-col items-center justify-center px-6 text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.4em] text-brim">
+            How it&apos;s made
+          </p>
+          <h2 className="max-w-4xl font-display text-4xl uppercase leading-[0.95] text-paper [text-shadow:0_4px_40px_rgba(0,0,0,0.75)] sm:text-6xl">
+            Wanna know how these big, juicy burgers are made?
+          </h2>
+          <p className="mt-6 text-xs uppercase tracking-[0.35em] text-paper/55">
+            Keep scrolling ↓
+          </p>
         </div>
-      )}
-    </section>
+
+        {/* Phase captions — larger glass cards with a line of detail. */}
+        {CAPTIONS.map((c) => (
+          <div
+            key={c.cls}
+            className={`cap ${c.cls} glass pointer-events-none absolute z-30 flex max-w-[21rem] flex-col gap-3 rounded-3xl p-6 opacity-0 shadow-2xl shadow-black/50 ${c.pos}`}
+          >
+            <span className="text-xs font-semibold uppercase tracking-[0.3em] text-brim">
+              {c.kicker}
+            </span>
+            <h3 className="font-display text-4xl uppercase leading-[0.92] text-paper sm:text-5xl">
+              {c.title}
+            </h3>
+            <p className="text-[0.95rem] leading-relaxed text-paper/80">{c.copy}</p>
+          </div>
+        ))}
+
+        {/* Loading veil until all frames are in memory (prevents flicker). */}
+        {!ready && (
+          <div className="absolute inset-0 z-40 grid place-items-center bg-black">
+            <span className="font-display text-sm uppercase tracking-[0.4em] text-paper/60">
+              Firing up the griddle…
+            </span>
+          </div>
+        )}
+      </section>
+    </div>
   );
 }
