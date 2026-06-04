@@ -38,6 +38,14 @@ export interface MenuItem {
   badge?: string;
   /** Extra search terms beyond name/description. */
   keywords?: string[];
+  /** Certified Halal — shows the Halal badge on the spotlight panel. */
+  halal?: boolean;
+  /** Heat descriptor for the badge, e.g. "Mild". */
+  heat?: string;
+  /** Nutrition facts — rendered as cards on the spotlight panel. */
+  nutrition?: { calories: number; protein: string; carbs: string; fat: string };
+  /** Allergen names (e.g. "Gluten", "Milk") — rendered as chips. */
+  allergens?: string[];
 }
 
 export interface MenuCategory {

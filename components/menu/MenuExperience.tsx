@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useLenis } from "lenis/react";
 import { MENU, DIET_FILTERS, rankMenu, type DietTag } from "@/lib/menu";
 import { MenuItemCard } from "./MenuItemCard";
+import { BrimSpotlight } from "./BrimSpotlight";
 import { SizeGuide } from "./SizeGuide";
 import { BuildYourOwn } from "./BuildYourOwn";
 import { CartButton } from "@/components/cart/CartButton";
@@ -279,7 +280,11 @@ export function MenuExperience() {
                       it.featured ? "sm:col-span-2" : ""
                     } ${surprise === it.slug ? "ring-4 ring-brim ring-offset-2 ring-offset-paper" : ""}`}
                   >
-                    <MenuItemCard item={it} />
+                    {it.slug === "brim-burger" ? (
+                      <BrimSpotlight item={it} />
+                    ) : (
+                      <MenuItemCard item={it} />
+                    )}
                   </div>
                 ))}
               </div>

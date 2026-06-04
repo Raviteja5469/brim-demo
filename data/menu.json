@@ -76,7 +76,11 @@
           "description": "Double American cheese, lettuce, tomatoes, gherkins, BRIM Burger Sauce & Signature Sauce in a seeded brioche bun.",
           "tags": ["beef", "cheesy"],
           "badge": "The original",
-          "featured": true
+          "featured": true,
+          "halal": true,
+          "heat": "Mild",
+          "nutrition": { "calories": 780, "protein": "42g", "carbs": "48g", "fat": "46g" },
+          "allergens": ["Gluten", "Milk", "Soya", "Egg", "Mustard"]
         },
         {
           "slug": "bbq-rasher",

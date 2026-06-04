@@ -4,40 +4,46 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { asset } from "@/lib/asset";
 
-// TEMPORARY video hero — a full-bleed clip that plays ONCE per page load (with
-// sound, no loop), with the tagline + CTAs overlaid for legibility. To restore the
+// TEMPORARY video hero — a full-bleed clip that autoplays ONCE per page load
+// (muted to satisfy browser autoplay, then unmuted on first interaction; not
+// looped), with the tagline + CTAs overlaid for legibility. To restore the
 // interactive liquid-glass hero, swap <HeroVideo /> back to <Hero /> in
 // app/page.tsx (the original Hero component is left untouched).
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // The clip keeps its sound. Browsers block sound-on autoplay until the user
-  // interacts, so we try to play immediately and, if that's refused, start
-  // playback (with sound) on the first user interaction — once.
+  // Browsers only allow MUTED autoplay. React also doesn't emit the `muted`
+  // attribute into the SSR HTML, so we force it on via the ref and start
+  // playback here (this is what actually makes the clip appear on load). Then
+  // we unmute — replaying if the short clip already finished — on the first
+  // user interaction, once.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+    video.muted = true;
     video.volume = 1;
 
-    const start = () => {
+    const play = () => video.play().catch(() => {});
+    play();
+    // Retry once the first frame is decodable, in case it wasn't ready yet.
+    video.addEventListener("canplay", play, { once: true });
+
+    const enableSound = () => {
       video.muted = false;
-      if (!video.ended) video.play().catch(() => {});
+      video.play().catch(() => {});
       teardown();
     };
     const teardown = () => {
-      window.removeEventListener("pointerdown", start);
-      window.removeEventListener("keydown", start);
-      window.removeEventListener("touchstart", start);
-      window.removeEventListener("scroll", start);
+      window.removeEventListener("pointerdown", enableSound);
+      window.removeEventListener("keydown", enableSound);
+      window.removeEventListener("touchstart", enableSound);
+      window.removeEventListener("scroll", enableSound);
     };
 
-    // Attempt immediate playback with sound; fall back to first-interaction.
-    video.play().catch(() => {
-      window.addEventListener("pointerdown", start);
-      window.addEventListener("keydown", start);
-      window.addEventListener("touchstart", start);
-      window.addEventListener("scroll", start, { passive: true });
-    });
+    window.addEventListener("pointerdown", enableSound);
+    window.addEventListener("keydown", enableSound);
+    window.addEventListener("touchstart", enableSound);
+    window.addEventListener("scroll", enableSound, { passive: true });
 
     return teardown;
   }, []);
@@ -47,16 +53,16 @@ export function HeroVideo() {
       id="hero"
       className="relative flex h-dvh items-center justify-center overflow-hidden bg-ink select-none"
     >
-      {/* Background video: plays once per load WITH sound (not looped). Sound-on
-          autoplay is blocked by browsers until the user interacts, so playback
-          may begin on the first interaction (see the effect above). image.png is
-          the poster shown until the first frame is ready. */}
+      {/* Background video: autoplays muted on load (browser requirement), plays
+          once (not looped), and unmutes on the first user interaction so it has
+          sound (see the effect above). */}
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         src={asset("/hero.mp4")}
-        poster={asset("/image.png")}
+        // poster={asset("/image.png")}
         autoPlay
+        muted
         playsInline
         preload="auto"
         aria-hidden
@@ -96,6 +102,25 @@ export function HeroVideo() {
           </Link>
         </div>
       </div> */}
+
+      {/* Brand lockup — small, top-left, over the video. BRIM wordmark is white
+          (reads on the dark video); the Halal mark is black, so invert(1) flips
+          it to white. */}
+      <div className="pointer-events-none absolute left-5 top-5 z-20 flex items-center gap-2.5 sm:left-6 sm:top-6">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={asset("/brim-logo.svg")}
+          alt="BRIM"
+          className="h-6 w-auto [filter:drop-shadow(0_2px_8px_rgba(0,0,0,0.7))] sm:h-7"
+        />
+        <span className="h-5 w-px bg-white/30" aria-hidden />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={asset("/halal.svg")}
+          alt="Halal certified"
+          className="h-7 w-7 [filter:invert(1)_drop-shadow(0_2px_6px_rgba(0,0,0,0.5))]"
+        />
+      </div>
 
       {/* Scroll cue — nudges down into "How It's Made", where the burger's
           journey begins. */}

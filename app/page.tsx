@@ -3,10 +3,13 @@
 import { HeroVideo } from "@/components/sections/HeroVideo";
 import { Specials } from "@/components/sections/Specials";
 import { HowItsMade } from "@/components/sections/HowItsMade";
+import { BrimBuild } from "@/components/sections/BrimBuild";
+import { BrandStory } from "@/components/sections/BrandStory";
 import { ExploreCTA } from "@/components/sections/ExploreCTA";
 
 // Landing page composition. Order matters for the scroll story:
-//   Hero (video) → How It's Made (pinned) → Specials (the lineup) → Explore CTAs
+//   Hero (video) → How It's Made (pinned) → Specials (the lineup) → Brim Build
+//   (anatomy of a burger) → Explore CTAs → Brand Story (the chronicle)
 //   → Footer (in layout).
 export default function Home() {
   return (
@@ -14,8 +17,10 @@ export default function Home() {
       {/* TEMP: <Hero /> */}
       <HeroVideo />
       <HowItsMade />
-      <Specials />
+      {/* <Specials /> */}
+      <BrimBuild />
       <ExploreCTA />
+      <BrandStory />
     </>
   );
 }
