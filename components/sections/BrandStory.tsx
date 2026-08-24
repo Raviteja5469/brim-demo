@@ -36,13 +36,13 @@ interface Milestone {
 const MILESTONES: Milestone[] = [
   {
     year: "2019",
-    title: "The Ignition Outpost",
-    subtitle: "Where it began · one store",
+    title: "The Foundation",
+    subtitle: "The company takes shape",
     description:
-      "Founded by Amadul Hassan in Hemel Hempstead on a single belief — that halal food deserves to be premium, bold and unapologetically big. One empty unit, one heavy-cast iron and an obsession with quality: grass-fed beef, artisan-baked buns and signature sauces crafted in-house — a brand the UK had never seen before.",
+      "BRIM Burgers Ltd is incorporated in Hemel Hempstead. It is the groundwork for a bigger idea: a focused, modern burger brand capable of giving Halal food the quality, confidence and identity it deserves.",
     icon: "compass",
-    metric: "1",
-    metricLabel: "Store it all started with",
+    metric: "BRIM",
+    metricLabel: "The foundation is laid",
     person: {
       name: "Amadul Hassan",
       role: "Founder & CEO",
@@ -51,13 +51,13 @@ const MILESTONES: Milestone[] = [
   },
   {
     year: "2021",
-    title: "The London Criss-Cross",
-    subtitle: "Refining the boutique footprint",
+    title: "The First BRIM",
+    subtitle: "Hemel Hempstead · first serve",
     description:
-      "Perfecting the signature double-smashed 40-second lace crust. We establish boutique landmarks in Stratford and High Barnet. The strict monochrome branding and meticulous presentation instantly command premium pricing and real social notoriety.",
+      "After the pandemic closure of their earlier restaurant, brothers Amadul and Jawad Hassan turn a setback into a new beginning. They launch BRIM as a premium Halal smash-burger concept built around bold flavour, disciplined preparation and a sharp monochrome identity.",
     icon: "award",
-    metric: "2",
-    metricLabel: "Flagships established",
+    metric: "1",
+    metricLabel: "First BRIM store launched",
   },
   {
     year: "2023",
@@ -198,8 +198,8 @@ export function BrandStory() {
               <span className="text-ash">obsession</span>
             </h2>
             <p className="bs-reveal mt-5 max-w-sm text-pretty text-sm leading-relaxed text-paper/55">
-              Seven years from a single London outpost to an international
-              boutique chain — smashed to order, every step audited.
+              From a Hemel Hempstead beginning to an international brand —
+              smashed to order, with one standard across every market.
             </p>
 
             {/* The timeline: a vertical line with a clickable node per year.
