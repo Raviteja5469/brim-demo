@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { SITE } from "@/lib/site";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
@@ -7,6 +8,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+
+const GTM_ID = "GTM-P8SPT2RM";
 
 // Display face: Bricolage Grotesque is variable — full weight range available,
 // so heading weight is controlled via CSS (.font-display → 800).
@@ -43,6 +46,15 @@ export default function RootLayout({
         className="min-h-dvh bg-ink text-paper antialiased"
         suppressHydrationWarning
       >
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            className="hidden invisible"
+            title="Google Tag Manager"
+          />
+        </noscript>
         <CartProvider>
           <SmoothScroll>
             <Navbar />
@@ -52,6 +64,13 @@ export default function RootLayout({
           {/* Single global slide-over cart; opened from anywhere via useCart. */}
           <CartDrawer />
         </CartProvider>
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');`}
+        </Script>
       </body>
     </html>
   );
