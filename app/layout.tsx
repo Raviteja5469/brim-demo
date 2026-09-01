@@ -9,10 +9,12 @@ import { Footer } from "@/components/layout/Footer";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 
-// Both containers share the one global `dataLayer`, which is Google's
-// documented multi-container setup. Keep analytics tags in a single
-// container to avoid double-counting the same event.
-const GTM_IDS = ["GTM-P8SPT2RM", "GTM-M4WP7MXM"] as const;
+// Single Google Tag Manager container. Kept as a list because the JSX below
+// maps over it, so another container can be added back here alone — but if one
+// is, keep each analytics tag in only one container to avoid double-counting an
+// event. All containers share the one global `dataLayer`, which is Google's
+// documented multi-container setup.
+const GTM_IDS = ["GTM-M4WP7MXM"] as const;
 
 // Display face: Bricolage Grotesque is variable — full weight range available,
 // so heading weight is controlled via CSS (.font-display → 800).
