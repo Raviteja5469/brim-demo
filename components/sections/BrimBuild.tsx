@@ -4,6 +4,7 @@ import { useRef, useState, type CSSProperties } from "react";
 import { asset } from "@/lib/asset";
 import { gsap, useGSAP } from "@/lib/gsap";
 import styles from "./BrimBuild.module.css";
+import { BurgerProcessVisual, animateBurgerProcess } from "./BurgerProcessVisual";
 
 const STEP_DURATION = 2.8;
 const pointOnCircle = (angle: number) => {
@@ -11,13 +12,13 @@ const pointOnCircle = (angle: number) => {
   return { x: 400 + 270 * Math.cos(radians), y: 400 + 270 * Math.sin(radians) };
 };
 const STEPS = [
-  { title: "Fresh beef", icon: "grass", headline: "Great burgers start here.", copy: "Grass-fed British beef, prepared fresh. Never frozen patties. Quality you can taste from the very first bite." },
-  { title: "Hand-formed", icon: "ball", headline: "The shape of things to come.", copy: "The beef is portioned and gently formed into a ball, ready to meet the hot griddle." },
-  { title: "The smash", icon: "press", headline: "Pressed. With purpose.", copy: "A firm press spreads the beef against the griddle, creating a thin patty with those signature lacy edges." },
-  { title: "Golden edges", icon: "spatula", headline: "This is where flavour happens.", copy: "The hot surface sears the beef into a deeply savoury crust, keeping the centre juicy and the edges crisp." },
-  { title: "Stack it up", icon: "stack", headline: "Double down on flavour.", copy: "Cheese melts into the hot patties. Then we stack them together for a rich, juicy bite." },
-  { title: "Bold flavours", icon: "sauce", headline: "The finishing touches.", copy: "Pickles, onions and our house sauce bring crunch, tang and creaminess to balance the beef." },
-  { title: "The Brim", icon: "burger", headline: "All together. All Brim.", copy: "A toasted brioche bun brings it all together. Fresh beef, crisp edges, melted cheese and bold flavours. Ready for that first bite." },
+  { title: "Fresh beef", icon: "grass", headline: "Great burgers start here.", copy: "Fresh, grass-fed British beef. Full of flavour, with no frozen patties." },
+  { title: "Hand-formed", icon: "ball", headline: "The shape of things to come.", copy: "Portioned by hand. Gently rolled into a ball, ready for the griddle." },
+  { title: "The smash", icon: "press", headline: "Pressed. With purpose.", copy: "One firm press turns the beef ball into a thin, even patty." },
+  { title: "Golden edges", icon: "spatula", headline: "This is where flavour happens.", copy: "The hot griddle creates a savoury crust: crisp edges, juicy centre." },
+  { title: "Stack it up", icon: "stack", headline: "Double down on flavour.", copy: "Melt the cheese. Stack the patties. Double the flavour in every bite." },
+  { title: "Bold flavours", icon: "sauce", headline: "The finishing touches.", copy: "Pickles, onions and house sauce add crunch, tang and a creamy finish." },
+  { title: "The Brim", icon: "burger", headline: "All together. All Brim.", copy: "Finish with a toasted brioche crown. Your Brim burger is ready." },
 ].map((step, index) => {
   const point = pointOnCircle(-90 + index * 360 / 7);
   return { ...step, x: point.x / 8, y: point.y / 8 };
@@ -70,7 +71,7 @@ export function BrimBuild() {
     setPaused(true);
     setComplete(false);
     setActiveStep(index);
-    playback.current?.pause().seek(index * STEP_DURATION, true);
+    playback.current?.pause().seek(index * STEP_DURATION + 2.25, true);
   }
 
   function togglePlayback() {
@@ -104,20 +105,30 @@ export function BrimBuild() {
         timeline.call(() => setActiveStep(index), [], at)
           .to(connectors[index], { strokeDashoffset: 0, duration: STEP_DURATION, ease: "none" }, at);
       });
+      animateBurgerProcess(timeline, process, STEP_DURATION);
       // Use actual visibility, independent of the pinned section above us and
       // ScrollTrigger's cached positions during route restoration/refresh.
+      const stage = process.querySelector("figure")!;
+      let ready = false;
+      let disposed = false;
       const sync = () => {
-        const rect = process.getBoundingClientRect();
+        const rect = stage.getBoundingClientRect();
         const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 73);
         const visible = visibleHeight > Math.min(rect.height, window.innerHeight - 73) * 0.45;
-        if (visible && !document.hidden && !userPaused.current) timeline.play();
+        if (ready && visible && !document.hidden && !userPaused.current) timeline.play();
         else timeline.pause();
       };
       syncPlayback.current = sync;
       const observer = new IntersectionObserver(sync, {
         rootMargin: "-73px 0px -40px 0px", threshold: Array.from({ length: 21 }, (_, i) => i / 20),
       });
-      observer.observe(process);
+      observer.observe(stage);
+      // Start the story only when its photographs can actually be displayed.
+      Promise.all(Array.from(stage.querySelectorAll("img"), image => image.decode().catch(() => {}))).then(() => {
+        if (disposed) return;
+        ready = true;
+        sync();
+      });
       const frame = requestAnimationFrame(sync);
       sync();
       document.addEventListener("visibilitychange", sync);
@@ -134,6 +145,7 @@ export function BrimBuild() {
         });
       });
       return () => {
+        disposed = true;
         observer.disconnect();
         cancelAnimationFrame(frame);
         document.removeEventListener("visibilitychange", sync);
@@ -181,9 +193,7 @@ export function BrimBuild() {
             </g>)}
           </svg>
           <div className={styles.burgerStage}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img data-burger className={styles.finishedBurger} src={asset("/burger-white.png")} width="1536" height="1024" loading="lazy" alt="Brim double smash burger with cheese, pickles, onions and house sauce in a glossy brioche bun" />
-            <p className={styles.burgerCaption}><span>Freshly smashed. Fully Brim.</span><strong>The big juicy one.</strong></p>
+            <BurgerProcessVisual activeStep={activeStep} />
           </div>
           <ol className={styles.steps} aria-label="How we make a Brim burger">
             {STEPS.map((item, index) => <li data-step key={item.icon} className={styles.step} style={{ "--x": `${item.x}%`, "--y": `${item.y}%` } as CSSProperties}>
