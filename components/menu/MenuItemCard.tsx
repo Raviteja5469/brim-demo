@@ -1,12 +1,10 @@
 import Link from "next/link";
 import type { MenuItem } from "@/lib/menu";
-import { getItemBySlug } from "@/lib/menu";
 import { asset } from "@/lib/asset";
 import { priceOf, formatGBP } from "@/lib/pricing";
-import { nutritionOf, isHalal } from "@/lib/menu-extras";
+import { isHalal } from "@/lib/menu-extras";
 import { SpiceMeter } from "./SpiceMeter";
 import { HalalBadge } from "./HalalBadge";
-import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 // Placeholder shown until a real product shot exists. To use a photo, set
 // `image: "/menu/<slug>.jpg"` on the item (drop the file in /public/menu).
@@ -25,31 +23,28 @@ function Placeholder({ name }: { name: string }) {
 }
 
 export function MenuItemCard({ item }: { item: MenuItem }) {
-  // Resolve the owning category so we can show per-item calories (demo facts).
-  const categoryId = getItemBySlug(item.slug)?.category.id ?? "";
-  const cal = nutritionOf(item, categoryId).calories;
   const halal = isHalal(item);
   const isVeggie = item.tags.includes("veggie");
 
   return (
-    // Dark card on the pure-black page. `group` so the photo scales on hover.
-    // The whole visual is a <Link>; the footer (calories + add) sits OUTSIDE the
-    // link so adding to cart never navigates.
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white/[0.03] shadow-xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 hover:-translate-y-1 hover:bg-white/[0.05] hover:ring-white/25">
+    // White tile on the paper page — the base is #f6f5f3 and the card is pure
+    // white, so the hairline ring + soft shadow keep each card clearly readable
+    // as its own object. `group` so the photo scales on hover. The whole card is
+    // a single <Link> to the item's page — the menu is display-only, there is
+    // nothing to order from here.
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-lg shadow-ink/5 ring-1 ring-ink/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-ink/10 hover:ring-ink/20">
       <Link
         href={`/menu/${item.slug}`}
         aria-label={`View ${item.name}`}
         className="flex flex-1 flex-col"
       >
-        {/* Image / placeholder. The image is the slack-absorber: it GROWS
-            (flex-1) to fill whatever height the grid row takes, so a card that
-            shares a row with a taller neighbour shows more food instead of an
-            empty gap below its copy. Featured tiles start a touch taller. */}
-        <div
-          className={`relative flex-1 overflow-hidden ${
-            item.featured ? "min-h-[17rem]" : "min-h-[13rem]"
-          }`}
-        >
+        {/* Image / placeholder — a FIXED height on every card, featured ones
+            included. It used to be the slack-absorber (flex-1), which meant a
+            card with less copy grew its photo and pushed its white block lower
+            than its neighbour's. Pinning the height puts the top edge of every
+            white block on one line across the row; the body below takes the
+            slack instead. */}
+        <div className="relative h-52 shrink-0 overflow-hidden">
           {item.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -71,20 +66,20 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
         </div>
 
         {/* Body — content height (the image above takes the row's slack). */}
-        <div className="flex flex-col gap-2.5 p-5 pb-3.5">
+        <div className="flex flex-1 flex-col gap-2.5 p-5">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-display text-2xl uppercase leading-[0.95] text-paper sm:text-3xl">
+            <h3 className="font-display text-2xl uppercase leading-[0.95] text-ink sm:text-3xl">
               {item.name}
             </h3>
-            <span className="shrink-0 font-display text-xl leading-none text-brim">
+            <span className="shrink-0 font-display text-xl leading-none text-brim-deep">
               {formatGBP(priceOf(item.slug))}
             </span>
           </div>
 
-          {item.spice ? <SpiceMeter level={item.spice} /> : null}
+          {item.spice ? <SpiceMeter level={item.spice} onLight /> : null}
 
           {item.description && (
-            <p className="text-sm leading-relaxed text-paper/55">
+            <p className="text-sm leading-relaxed text-ink/60">
               {item.description}
             </p>
           )}
@@ -94,7 +89,7 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
               {item.variants.map((v) => (
                 <li
                   key={v}
-                  className="rounded-full bg-white/[0.06] px-2.5 py-1 text-xs font-medium text-paper/75 ring-1 ring-white/5"
+                  className="rounded-full bg-ink/[0.05] px-2.5 py-1 text-xs font-medium text-ink/70 ring-1 ring-ink/10"
                 >
                   {v}
                 </li>
@@ -103,20 +98,12 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
           )}
 
           {isVeggie && (
-            <span className="mt-auto w-fit pt-1 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-emerald-300/80">
+            <span className="mt-auto w-fit pt-1 text-[0.7rem] font-semibold uppercase tracking-[0.2em] text-emerald-700">
               🌱 Plant-friendly
             </span>
           )}
         </div>
       </Link>
-
-      {/* Footer (outside the Link): calories + direct add. */}
-      <div className="flex items-center justify-between gap-3 border-t border-white/10 px-5 py-3.5">
-        <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-paper/45 tabular-nums">
-          {cal} Cal
-        </span>
-        <AddToCartButton slug={item.slug} variant="icon" />
-      </div>
     </article>
   );
 }

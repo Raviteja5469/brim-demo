@@ -1,10 +1,11 @@
-// Product detail page for a single menu item. Server component — the only
-// interactive pieces are the <AddToCartButton> islands and the gallery. Pure
-// solid-black theme. Used by app/menu/[slug]/page.tsx for every item.
+// Product detail page for a single menu item. Server component — the gallery is
+// the only interactive piece. Pure solid-black theme. Used by
+// app/menu/[slug]/page.tsx for every item.
 //
-// The buy column is deliberately rich (Halal + heat badges, "what's inside"
+// The facts column is deliberately rich (Halal + heat badges, "what's inside"
 // chips, a macro grid and allergens) so no item's page ever reads as empty —
 // the facts are derived per item in lib/menu-extras when not set in the JSON.
+// The menu is display-only: there is no ordering anywhere on the site.
 import Link from "next/link";
 import type { MenuItem, MenuCategory } from "@/lib/menu";
 import { priceOf, formatGBP } from "@/lib/pricing";
@@ -13,7 +14,6 @@ import { productFacts } from "@/lib/menu-extras";
 import { SpiceMeter } from "./SpiceMeter";
 import { HalalBadge, HalalMark } from "./HalalBadge";
 import { ProductGallery, type GalleryImage } from "./ProductGallery";
-import { AddToCartButton } from "@/components/cart/AddToCartButton";
 
 // Burger items get a second "what's inside" anatomy shot in the gallery; other
 // categories (shakes, fries, drinks…) keep their single product photo.
@@ -193,23 +193,7 @@ export function ProductDetail({
               </div>
             )}
 
-            {/* Actions */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <AddToCartButton
-                slug={item.slug}
-                variant="full"
-                label="Add to cart"
-                className="bg-paper text-ink hover:bg-white/90"
-              />
-              <AddToCartButton
-                slug={item.slug}
-                variant="full"
-                buyNow
-                label="Buy now"
-                className="bg-brim text-ink hover:brightness-110"
-              />
-            </div>
-            <p className="mt-3 flex items-center gap-2 text-xs text-paper/40">
+            <p className="mt-8 flex items-center gap-2 text-xs text-paper/40">
               <HalalMark size="h-5 w-5" icon="h-3.5 w-3.5" />
               Strictly Halal · Smashed to order · Never frozen
             </p>

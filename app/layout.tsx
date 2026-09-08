@@ -6,8 +6,6 @@ import { SITE } from "@/lib/site";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { CartProvider } from "@/components/cart/CartProvider";
-import { CartDrawer } from "@/components/cart/CartDrawer";
 
 // Single Google Tag Manager container. Kept as a list because the JSX below
 // maps over it, so another container can be added back here alone — but if one
@@ -63,15 +61,11 @@ export default function RootLayout({
             />
           ))}
         </noscript>
-        <CartProvider>
-          <SmoothScroll>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </SmoothScroll>
-          {/* Single global slide-over cart; opened from anywhere via useCart. */}
-          <CartDrawer />
-        </CartProvider>
+        <SmoothScroll>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScroll>
         {GTM_IDS.map((id) => (
           <Script
             key={id}
