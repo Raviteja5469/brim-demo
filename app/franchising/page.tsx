@@ -28,16 +28,16 @@ const FORMATS = [
 ];
 
 const SUPPORT = [
-  { title: "Territory planning", copy: "Demand mapping and protected-market assessment.", span: "lg:col-span-5" },
-  { title: "Property search", copy: "A focused brief for agents and landlords.", span: "lg:col-span-3" },
-  { title: "Lease and site review", copy: "Commercial and operational checks before commitment.", span: "lg:col-span-4" },
-  { title: "Store design", copy: "A BRIM layout built around flow and throughput.", span: "lg:col-span-3" },
-  { title: "Kitchen specification", copy: "Equipment, stations and service-line planning.", span: "lg:col-span-3" },
-  { title: "Supply chain access", copy: "Approved products and consistent specifications.", span: "lg:col-span-3" },
-  { title: "Recruitment guidance", copy: "Role planning and practical hiring support.", span: "lg:col-span-3" },
-  { title: "Team training", copy: "Food, service and operating-standard training.", span: "lg:col-span-4" },
-  { title: "Launch marketing", copy: "A local opening plan designed to build demand.", span: "lg:col-span-5" },
-  { title: "Ongoing operations", copy: "Reviews, reporting and hands-on support after launch.", span: "lg:col-span-3" },
+  { title: "Territory planning", copy: "Demand mapping and protected-market assessment.", span: "xl:col-span-5" },
+  { title: "Property search", copy: "A focused brief for agents and landlords.", span: "xl:col-span-3" },
+  { title: "Lease and site review", copy: "Commercial and operational checks before commitment.", span: "xl:col-span-4" },
+  { title: "Store design", copy: "A BRIM layout built around flow and throughput.", span: "xl:col-span-3" },
+  { title: "Kitchen specification", copy: "Equipment, stations and service-line planning.", span: "xl:col-span-3" },
+  { title: "Supply chain access", copy: "Approved products and consistent specifications.", span: "xl:col-span-3" },
+  { title: "Recruitment guidance", copy: "Role planning and practical hiring support.", span: "xl:col-span-3" },
+  { title: "Team training", copy: "Food, service and operating-standard training.", span: "xl:col-span-4" },
+  { title: "Launch marketing", copy: "A local opening plan designed to build demand.", span: "xl:col-span-5" },
+  { title: "Ongoing operations", copy: "Reviews, reporting and hands-on support after launch.", span: "xl:col-span-3" },
 ];
 
 const CEILINGS = [
@@ -81,9 +81,9 @@ export default function FranchisingPage() {
       <section className="px-6 pb-20 pt-32 sm:pb-24 sm:pt-36">
         <div className="mx-auto w-full max-w-6xl">
           <div className="animate-rise grid gap-6 lg:grid-cols-12 lg:items-end">
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-ink/45">Franchise journey · UK &amp; Pakistan</p>
-              <h1 className="mt-4 font-display text-5xl uppercase leading-[0.85] sm:text-7xl">Restaurant owner<br />opportunities.</h1>
+              <h1 className="mt-4 font-display text-[clamp(2rem,5.5vw,4.5rem)] uppercase leading-[0.95] [overflow-wrap:anywhere]">Restaurant owner<br />opportunities.</h1>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-ink/55 lg:col-span-5 lg:justify-self-end lg:text-right">Join the team building BRIM, one committed operator and one carefully chosen market at a time.</p>
           </div>
@@ -229,7 +229,7 @@ export default function FranchisingPage() {
                 <p className="absolute bottom-5 left-5 rounded-full border border-white/20 bg-black/55 px-4 py-2 text-xs font-bold uppercase tracking-wider text-paper backdrop-blur-md">{format.footprint}</p>
               </div>
               <div className="flex flex-1 flex-col p-6 sm:p-8">
-                <div className="flex items-start justify-between gap-4">
+                <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.3em] text-ink/35">0{index + 1}</p>
                     <h3 className="mt-3 font-display text-3xl uppercase leading-none">{format.name}</h3>
@@ -253,7 +253,7 @@ export default function FranchisingPage() {
 
       {/* ── Support package ──────────────────────────────────────────── */}
       <Section eyebrow="Backed end to end" title="What BRIM does for you">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-12">
           {SUPPORT.map((item, index) => (
             <article
               key={item.title}
@@ -273,7 +273,7 @@ export default function FranchisingPage() {
                   <span className="h-px flex-1 origin-left scale-x-50 bg-ink/10 transition-transform duration-500 ease-out group-hover:scale-x-100" aria-hidden />
                 </div>
                 <div>
-                  <h3 className="font-display text-2xl uppercase leading-none sm:text-3xl">{item.title}</h3>
+                  <h3 className="font-display text-2xl uppercase leading-tight [overflow-wrap:anywhere] xl:text-3xl">{item.title}</h3>
                   <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink/55">{item.copy}</p>
                 </div>
               </div>
@@ -313,18 +313,18 @@ export default function FranchisingPage() {
 
       {/* ── Pathway ──────────────────────────────────────────────────── */}
       <Section eyebrow="From first hello to first serve" title="The pathway">
-        <ol className="relative grid gap-4 before:absolute before:bottom-10 before:left-6 before:top-10 before:w-px before:bg-ink/15 before:content-[''] lg:grid-cols-6 lg:items-start lg:gap-3 lg:before:bottom-auto lg:before:left-[8.33%] lg:before:right-[8.33%] lg:before:top-8 lg:before:h-px lg:before:w-auto">
+        <ol className="relative grid gap-4 before:absolute before:bottom-10 before:left-6 before:top-10 before:w-px before:bg-ink/15 before:content-[''] xl:grid-cols-6 xl:items-start xl:gap-3 xl:before:bottom-auto xl:before:left-[8.33%] xl:before:right-[8.33%] xl:before:top-8 xl:before:h-px xl:before:w-auto">
           {PATHWAY.map(([number, title, copy], index) => (
-            <li key={number} className="franchise-blueprint-card group relative flex items-start gap-5 lg:block">
-              <div className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-full border border-ink/20 bg-paper font-display text-lg transition-[background-color,color,transform] duration-500 group-hover:scale-110 group-hover:bg-ink group-hover:text-paper lg:mx-auto lg:h-16 lg:w-16 lg:text-xl">
+            <li key={number} className="franchise-blueprint-card group relative flex items-start gap-5 xl:block">
+              <div className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-full border border-ink/20 bg-paper font-display text-lg transition-[background-color,color,transform] duration-500 group-hover:scale-110 group-hover:bg-ink group-hover:text-paper xl:mx-auto xl:h-16 xl:w-16 xl:text-xl">
                 {number}
               </div>
               {index < PATHWAY.length - 1 && (
-                <span className="absolute left-[1.15rem] top-14 z-10 bg-paper py-1 text-sm text-ink/40 lg:-right-2 lg:left-auto lg:top-8 lg:-translate-y-1/2 lg:px-1" aria-hidden>
-                  <span className="lg:hidden">↓</span><span className="hidden lg:inline">›</span>
+                <span className="absolute left-[1.15rem] top-14 z-10 bg-paper py-1 text-sm text-ink/40 xl:-right-2 xl:left-auto xl:top-8 xl:-translate-y-1/2 xl:px-1" aria-hidden>
+                  <span className="xl:hidden">↓</span><span className="hidden xl:inline">›</span>
                 </span>
               )}
-              <div className={`min-h-40 flex-1 rounded-3xl bg-white p-5 ring-1 ring-ink/10 transition-[transform,box-shadow] duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-ink/10 lg:mt-8 lg:flex-none ${index % 2 === 0 ? "lg:min-h-64" : "lg:min-h-52"}`}>
+              <div className={`min-h-40 flex-1 rounded-3xl bg-white p-5 ring-1 ring-ink/10 transition-[transform,box-shadow] duration-500 ease-out group-hover:-translate-y-1 group-hover:shadow-xl group-hover:shadow-ink/10 xl:mt-8 xl:flex-none ${index % 2 === 0 ? "xl:min-h-64" : "xl:min-h-52"}`}>
                 <p className="text-[0.65rem] font-bold uppercase tracking-[0.25em] text-ink/40">Stage {number}</p>
                 <h3 className="mt-5 font-display text-xl uppercase leading-none sm:text-2xl">{title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-ink/55">{copy}</p>
@@ -376,7 +376,7 @@ export default function FranchisingPage() {
           <div className="grid gap-10 lg:grid-cols-5">
             <div className="lg:col-span-2">
               <p className="text-xs font-bold uppercase tracking-[0.35em] text-ink/45">Your next move</p>
-              <h2 className="mt-4 font-display text-5xl uppercase leading-[0.88] sm:text-6xl">Start your journey</h2>
+              <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.75rem)] uppercase leading-[0.98] [overflow-wrap:anywhere]">Start your journey</h2>
               <p className="mt-5 max-w-sm leading-relaxed text-ink/55">Complete the three short steps. We’ll review your fit and unlock the introductory franchise pack after submission.</p>
               <p className="mt-8 text-sm font-semibold">{SITE.contact.franchiseEmail}</p>
               <p className="mt-2 text-xs text-ink/45">{COST_NOTE}</p>
@@ -408,9 +408,9 @@ function Section({
     <section className="px-6 py-20 sm:py-24">
       <div className={`mx-auto w-full max-w-6xl ${divider ? "border-t border-ink/10 pt-16 sm:pt-20" : ""}`}>
         <header className="mb-10 grid gap-6 sm:mb-12 lg:grid-cols-12 lg:items-end">
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <p className="text-xs font-bold uppercase tracking-[0.35em] text-ink/45">{eyebrow}</p>
-            <h2 className="mt-4 font-display text-5xl uppercase leading-[0.88] sm:text-6xl">{title}</h2>
+            <h2 className="mt-4 font-display text-[clamp(2rem,4.5vw,3.75rem)] uppercase leading-[0.98] [overflow-wrap:anywhere]">{title}</h2>
           </div>
           {lede ? (
             <p className="max-w-xl text-base leading-relaxed text-ink/60 lg:col-span-5 lg:justify-self-end">{lede}</p>

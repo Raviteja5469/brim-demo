@@ -9,7 +9,6 @@ import { useLenis } from "lenis/react";
 import { MENU, DIET_FILTERS, rankMenu, type DietTag } from "@/lib/menu";
 import { MenuItemCard } from "./MenuItemCard";
 import { BrimSpotlight } from "./BrimSpotlight";
-import { BuildYourOwn } from "./BuildYourOwn";
 
 export function MenuExperience() {
   const lenis = useLenis();
@@ -259,9 +258,7 @@ export function MenuExperience() {
                   <div
                     key={it.slug}
                     id={`item-${it.slug}`}
-                    className={`rounded-3xl transition-all duration-300 ${
-                      it.featured ? "sm:col-span-2" : ""
-                    } ${surprise === it.slug ? "ring-4 ring-brim ring-offset-2 ring-offset-paper" : ""}`}
+                    className={`rounded-3xl transition-all duration-300 ${surprise === it.slug ? "ring-4 ring-brim ring-offset-2 ring-offset-paper" : ""}`}
                   >
                     {it.slug === "brim-burger" ? (
                       <BrimSpotlight item={it} />

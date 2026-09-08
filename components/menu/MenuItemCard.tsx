@@ -29,7 +29,7 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
   return (
     // White tile on the paper page — the base is #f6f5f3 and the card is pure
     // white, so the hairline ring + soft shadow keep each card clearly readable
-    // as its own object. `group` so the photo scales on hover. The whole card is
+    // as its own object. The whole card is
     // a single <Link> to the item's page — the menu is display-only, there is
     // nothing to order from here.
     <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl bg-white shadow-lg shadow-ink/5 ring-1 ring-ink/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-ink/10 hover:ring-ink/20">
@@ -38,19 +38,14 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
         aria-label={`View ${item.name}`}
         className="flex flex-1 flex-col"
       >
-        {/* Image / placeholder — a FIXED height on every card, featured ones
-            included. It used to be the slack-absorber (flex-1), which meant a
-            card with less copy grew its photo and pushed its white block lower
-            than its neighbour's. Pinning the height puts the top edge of every
-            white block on one line across the row; the body below takes the
-            slack instead. */}
-        <div className="relative h-52 shrink-0 overflow-hidden">
+        {/* Consistent framing; tall and wide product photos remain fully visible. */}
+        <div className="relative aspect-[3/2] shrink-0 overflow-hidden bg-white">
           {item.image ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={asset(item.image)}
               alt={item.name}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-contain"
             />
           ) : (
             <Placeholder name={item.name} />
@@ -67,8 +62,8 @@ export function MenuItemCard({ item }: { item: MenuItem }) {
 
         {/* Body — content height (the image above takes the row's slack). */}
         <div className="flex flex-1 flex-col gap-2.5 p-5">
-          <div className="flex items-start justify-between gap-3">
-            <h3 className="font-display text-2xl uppercase leading-[0.95] text-ink sm:text-3xl">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <h3 className="min-w-0 font-display text-2xl uppercase leading-tight text-ink [overflow-wrap:anywhere] sm:text-3xl">
               {item.name}
             </h3>
             <span className="shrink-0 font-display text-xl leading-none text-brim-deep">

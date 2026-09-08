@@ -31,3 +31,17 @@ Use case: product-mockup. Reference image: the existing final Brim burger, use i
 ## public/process/beef-ball.webp
 
 Use case: product-mockup. Photographic asset for a burger-making animation. One round hand-formed ball of fresh raw minced beef, red with small white fat flecks. No hands, no utensils, no other objects. Pure white #ffffff background, tiny contact shadow. Low three-quarter front angle, same natural texture and lighting as the prior beef photos. Landscape 1536x1024 composition, centered ball occupies 55% of canvas width. Show the whole ball with plenty of white margin. Photorealistic, no text, no logos.
+
+
+## Raw patty update
+
+`public/process/raw-patty.webp` is a separate raw patty photograph, matched to the
+low camera angle and visible thickness of the cheese-stack reference. It replaces
+the previously stretched beef-ball result. The ball now compresses only slightly;
+the press conceals a short transition to the patty, which retains its natural
+proportions. Reduced-motion users see the finished raw patty immediately.
+
+Generation brief: one freshly pressed raw beef patty on white, low front
+three-quarter angle, rough edges, visible thickness and fat flecks. Match one
+patty in the cheese-stack reference; no cheese, bun, hands or press. Preserve
+clear space above for the moving tool and a consistent contact baseline.

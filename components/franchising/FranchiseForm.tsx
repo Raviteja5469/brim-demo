@@ -81,14 +81,14 @@ export function FranchiseForm() {
         {STEPS.map((label, index) => (
           <li key={label} aria-current={step === index ? "step" : undefined}>
             <div className={`h-1.5 rounded-full transition-colors duration-300 ${index <= step ? "bg-ink" : "bg-ink/15"}`} />
-            <span className={`mt-2 block text-xs font-bold uppercase tracking-wider ${index === step ? "text-ink" : "text-ink/40"}`}>{index + 1}. {label}</span>
+            <span className={`mt-2 block text-[10px] font-bold uppercase tracking-wide sm:text-xs ${index === step ? "text-ink" : "text-ink/40"}`}>{index + 1}. {label}</span>
           </li>
         ))}
       </ol>
 
       <div className="mt-8">
         {step === 0 && (
-          <fieldset>
+          <fieldset className="min-w-0">
             <legend className="font-display text-3xl uppercase">Tell us about you</legend>
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
               <Input id="firstName" label="First name" value={values.firstName} error={errors.firstName} autoComplete="given-name" onChange={(value) => set("firstName", value)} />
@@ -100,7 +100,7 @@ export function FranchiseForm() {
         )}
 
         {step === 1 && (
-          <fieldset>
+          <fieldset className="min-w-0">
             <legend className="font-display text-3xl uppercase">Your investment</legend>
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
               <Select id="format" label="Preferred format" value={values.format} error={errors.format} onChange={(value) => set("format", value)} options={["Delivery kitchen — from £165K", "Food court — from £229.9K", "High street — from £272.6K", "Flagship — from £348.6K", "Open to recommendation"]} />
@@ -112,7 +112,7 @@ export function FranchiseForm() {
         )}
 
         {step === 2 && (
-          <fieldset>
+          <fieldset className="min-w-0">
             <legend className="font-display text-3xl uppercase">How should we reach you?</legend>
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
               <Input id="email" label="Email" type="email" value={values.email} error={errors.email} autoComplete="email" onChange={(value) => set("email", value)} />
@@ -127,7 +127,7 @@ export function FranchiseForm() {
         )}
       </div>
 
-      <div className="mt-8 flex items-center justify-between gap-3 border-t border-ink/10 pt-6">
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-ink/10 pt-6">
         {step > 0 ? <button type="button" onClick={() => setStep((current) => current - 1)} className="rounded-full border border-ink/20 px-5 py-3 text-sm font-semibold uppercase tracking-wide text-ink transition-colors duration-300 hover:bg-ink/5">Back</button> : <span />}
         {step < 2
           ? <button type="button" onClick={nextStep} className="rounded-full bg-ink px-6 py-3 text-sm font-semibold uppercase tracking-wide text-paper transition-transform duration-300 hover:scale-[1.03]">Continue</button>
@@ -139,9 +139,9 @@ export function FranchiseForm() {
 
 function Input({ id, label, value, onChange, error, type = "text", autoComplete }: { id: string; label: string; value: string; onChange: (value: string) => void; error?: string; type?: string; autoComplete: string }) {
   return (
-    <label htmlFor={id} className="block">
+    <label htmlFor={id} className="block min-w-0">
       <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-ink/55">{label}</span>
-      <input id={id} name={id} type={type} value={value} onChange={(event) => onChange(event.target.value)} autoComplete={autoComplete} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} className={`w-full rounded-xl border bg-paper px-4 py-3 text-ink outline-none transition-colors duration-300 ${error ? "border-red-500" : "border-ink/15 focus:border-ink/45"}`} />
+      <input id={id} name={id} type={type} value={value} onChange={(event) => onChange(event.target.value)} autoComplete={autoComplete} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} className={`min-w-0 max-w-full w-full rounded-xl border bg-paper px-4 py-3 text-ink outline-none transition-colors duration-300 ${error ? "border-red-500" : "border-ink/15 focus:border-ink/45"}`} />
       {error && <span id={`${id}-error`} className="mt-1.5 block text-xs text-red-600">{error}</span>}
     </label>
   );
@@ -149,9 +149,9 @@ function Input({ id, label, value, onChange, error, type = "text", autoComplete 
 
 function Select({ id, label, value, onChange, error, options }: { id: string; label: string; value: string; onChange: (value: string) => void; error?: string; options: string[] }) {
   return (
-    <label htmlFor={id} className="block">
+    <label htmlFor={id} className="block min-w-0">
       <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-ink/55">{label}</span>
-      <select id={id} name={id} value={value} onChange={(event) => onChange(event.target.value)} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} className={`w-full rounded-xl border bg-paper px-4 py-3 text-ink outline-none transition-colors duration-300 ${error ? "border-red-500" : "border-ink/15 focus:border-ink/45"}`}>
+      <select id={id} name={id} value={value} onChange={(event) => onChange(event.target.value)} aria-invalid={!!error} aria-describedby={error ? `${id}-error` : undefined} className={`min-w-0 max-w-full w-full rounded-xl border bg-paper px-4 py-3 text-ink outline-none transition-colors duration-300 ${error ? "border-red-500" : "border-ink/15 focus:border-ink/45"}`}>
         <option value="">Select an option</option>{options.map((option) => <option key={option}>{option}</option>)}
       </select>
       {error && <span id={`${id}-error`} className="mt-1.5 block text-xs text-red-600">{error}</span>}

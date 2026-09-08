@@ -13,6 +13,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import { asset } from "@/lib/asset";
 import { priceOf, formatGBP } from "@/lib/pricing";
 import type { MenuItem } from "@/lib/menu";
+import { isHalal } from "@/lib/menu-extras";
 import { MenuItemCard } from "./MenuItemCard";
 
 const BREAKDOWN = "/detaileburger.png";
@@ -56,14 +57,13 @@ function SpotlightDrawer({
 
   const unit = priceOf(item.slug);
   const images = [
-    { src: BREAKDOWN, contain: true, label: "What's inside" },
     ...(item.image ? [{ src: item.image, contain: false, label: item.name }] : []),
+    { src: BREAKDOWN, contain: true, label: "What's inside" },
   ];
 
-  // Esc to close + lock body scroll while open; reset transient state on open.
+  // Esc to close and lock body scroll while open.
   useEffect(() => {
     if (!open) return;
-    setActive(0);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
     const prev = document.body.style.overflow;
@@ -106,6 +106,8 @@ function SpotlightDrawer({
       <aside
         ref={panelRef}
         role="dialog"
+        inert={!open}
+        aria-hidden={!open}
         aria-modal="true"
         aria-label={`${item.name} details`}
         className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-lg flex-col bg-paper text-ink shadow-2xl ring-1 ring-ink/10 transition-transform duration-300 ease-out ${
@@ -120,16 +122,16 @@ function SpotlightDrawer({
             {/* Logo artwork is white — invert it to black on the light panel. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={asset("/brim-logo.svg")} alt="BRIM" className="h-6 w-auto [filter:invert(1)]" />
-            <span className="h-6 w-px bg-ink/15" aria-hidden />
+            {isHalal(item) && <><span className="h-6 w-px bg-ink/15" aria-hidden />
             {/* Halal artwork is black — reads as-is on the light panel. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={asset("/halal.svg")} alt="Halal certified" className="h-7 w-7" />
+            <img src={asset("/halal.svg")} alt="Halal certified" className="h-7 w-7" /></>}
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="grid h-9 w-9 place-items-center rounded-full text-ink/55 transition-colors hover:bg-ink/5 hover:text-ink"
+            className="grid h-11 w-11 place-items-center rounded-full text-ink/55 transition-colors hover:bg-ink/5 hover:text-ink"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
               <path d="m6 6 12 12M18 6 6 18" />
@@ -138,10 +140,10 @@ function SpotlightDrawer({
         </div>
 
         {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto px-5 pb-6">
+        <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-6">
           {/* Gallery: thumbnail strip + big (dark) image with Halal/Mild badges */}
-          <div className="flex gap-3" data-stagger>
-            <div className="flex flex-col gap-2">
+          <div className="flex flex-col-reverse gap-3 sm:flex-row" data-stagger>
+            <div className="flex gap-2 sm:flex-col">
               {images.map((img, i) => (
                 <button
                   key={img.src}
@@ -153,20 +155,20 @@ function SpotlightDrawer({
                   }`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={asset(img.src)} alt="" className={`h-full w-full ${img.contain ? "object-contain p-1" : "object-cover"}`} />
+                  <img src={asset(img.src)} alt="" className={`h-full w-full ${img.contain ? "object-contain p-1" : "object-contain"}`} />
                 </button>
               ))}
             </div>
 
-            <div className="relative flex-1 overflow-hidden rounded-2xl bg-ink">
+            <div className="relative min-w-0 flex-1 overflow-hidden rounded-2xl bg-ink">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={asset(images[active].src)}
                 alt={item.name}
-                className={`h-64 w-full ${images[active].contain ? "object-contain p-3" : "object-cover"}`}
+                className={`aspect-[4/3] w-full ${images[active].contain ? "object-contain p-3" : "object-contain"}`}
               />
               <div className="absolute right-3 top-3 flex flex-col items-center gap-2">
-                {item.halal && (
+                {isHalal(item) && (
                   <span className="grid h-12 w-12 place-items-center rounded-full bg-white shadow-lg ring-1 ring-black/5" title="Halal certified">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={asset("/halal.svg")} alt="Halal certified" className="h-7 w-7" />
@@ -184,7 +186,7 @@ function SpotlightDrawer({
           </div>
 
           {/* Title + price */}
-          <div className="mt-5 flex items-start justify-between gap-3" data-stagger>
+          <div className="mt-5 flex flex-wrap items-start justify-between gap-3" data-stagger>
             <div>
               {item.badge && (
                 <p className="text-xs font-bold uppercase tracking-[0.3em] text-brim-deep">{item.badge}</p>
@@ -202,7 +204,7 @@ function SpotlightDrawer({
 
           {/* Nutrition cards */}
           {item.nutrition && (
-            <div className="mt-5 grid grid-cols-4 gap-2">
+            <div className="mt-5 grid grid-cols-2 gap-2 min-[480px]:grid-cols-4">
               {[
                 { v: item.nutrition.calories, l: "Calories" },
                 { v: item.nutrition.protein, l: "Protein" },
@@ -250,7 +252,7 @@ function SpotlightDrawer({
         {/* Footer: the standing product promise — nothing to order from here. */}
         <div className="border-t border-ink/10 px-5 py-4">
           <p className="text-center text-xs text-ink/45">
-            Strictly Halal · Smashed to order · Never frozen
+            {isHalal(item) ? "Strictly Halal · Smashed to order · Never frozen" : "Made to enjoy"}
           </p>
         </div>
       </aside>

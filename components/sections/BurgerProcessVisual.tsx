@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { asset } from "@/lib/asset";
 import { gsap } from "@/lib/gsap";
 import styles from "./BurgerProcessVisual.module.css";
@@ -9,7 +10,7 @@ const SCENES = [
   { image: "hand-formed", label: "Formed by hand", description: "Gloved hands gently shape the beef into a round ball." },
   { image: "beef-ball", label: "Pressed into a patty", description: "A steel burger press moves down and flattens the beef ball." },
   { image: "seared-patty", label: "Crisp, golden edges", description: "A thin seared patty with crisp, caramelised edges." },
-  { image: "cheese-stack", label: "Patties & melted cheese", description: "Two hot beef patties stacked with melted American cheese." },
+  { image: "cheese-stack", label: "Stacked with cheese", description: "Two hot beef patties stacked with melted American cheese." },
   { image: "dressed-stack", label: "Sauced & topped", description: "The stack sits on a brioche base with pickles, onions and house sauce." },
   { image: null, label: "The big juicy one.", description: "The finished Brim burger, crowned with its glossy brioche bun." },
 ];
@@ -31,11 +32,14 @@ export function animateBurgerProcess(timeline: gsap.core.Timeline, root: Element
     const food = scene.querySelector("[data-food]");
     if (index === 2) {
       const press = scene.querySelector("[data-press]");
+      const patty = scene.querySelector("[data-patty]");
       // Keep both photographs on the same ground plane. The plate contacts
       // the ball before compression and lifts only after a short firm hold.
       timeline.set(press, { visibility: "visible" }, at + 0.42)
         .fromTo(press, { yPercent: -76 }, { yPercent: -8, duration: 0.72, ease: "power2.inOut", immediateRender: false }, at + 0.42)
-        .fromTo(food, { scaleX: 1, scaleY: 1 }, { scaleX: 1.35, scaleY: 0.34, duration: 0.5, ease: "power2.inOut", immediateRender: false }, at + 0.64)
+        .fromTo(food, { scaleX: 1, scaleY: 1 }, { scaleX: 1.08, scaleY: 0.72, duration: 0.4, ease: "power2.inOut", immediateRender: false }, at + 0.64)
+        .fromTo(food, { opacity: 1 }, { opacity: 0, duration: 0.2, immediateRender: false }, at + 0.88)
+        .fromTo(patty, { opacity: 0 }, { opacity: 1, duration: 0.2, immediateRender: false }, at + 0.88)
         .to(press, { yPercent: -90, duration: 0.48, ease: "power2.in" }, at + 1.55)
         .set(press, { visibility: "hidden" }, at + 2.03);
     } else if (index === 1) {
@@ -74,7 +78,11 @@ export function BurgerProcessVisual({ activeStep }: { activeStep: number }) {
             <img data-food src={asset(scene.image ? `/process/${scene.image}.webp` : "/burger-white.png")} alt="" width="1536" height="1024" className={styles.food} draggable={false} />
             {index === 2 && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img data-press src={asset("/process/burger-press.webp")} alt="" width="1536" height="1024" className={styles.press} draggable={false} />
+              <img data-patty src={asset("/process/raw-patty.webp")} alt="" width="1536" height="1024" className={styles.patty} draggable={false} />
+            )}
+            {index === 2 && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img data-press src={asset("/process/burger-press.webp")} alt="" width="1536" height="1024" className={styles.press} style={{ "--press-mask": `url("${asset("/process/burger-press-mask.svg")}")` } as CSSProperties} draggable={false} />
             )}
             {index === 3 && <div className={styles.steam} aria-hidden="true"><i data-steam /><i data-steam /><i data-steam /></div>}
           </div>

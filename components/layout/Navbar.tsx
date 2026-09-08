@@ -101,7 +101,7 @@ export function Navbar() {
 
       {/* Mobile dropdown */}
       {open && (
-        <nav aria-label="Primary" className="border-t border-ink/10 bg-paper lg:hidden">
+        <nav aria-label="Primary" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-ink/10 bg-paper lg:hidden">
           <ul className="mx-auto w-full max-w-7xl px-5 py-2 sm:px-8">
             {LINKS.map((link) => {
               const active = isActive(link.href);

@@ -6,7 +6,7 @@ import Image from "next/image";
 // for the page it sits on, because what a diner needs to know on the menu is
 // not what an operator needs to know on the franchising page.
 
-type Variant = "menu" | "franchising" | "about" | "locations";
+type Variant = "home" | "menu" | "franchising" | "about" | "locations";
 
 interface Content {
   eyebrow: string;
@@ -16,6 +16,16 @@ interface Content {
 }
 
 const CONTENT: Record<Variant, Content> = {
+  home: {
+    eyebrow: "Our Halal promise",
+    title: "Big flavour. Fully Halal.",
+    body: "From the first burger to the last bite, our whole menu is fully Halal. It’s part of how we source, prepare and serve the food you come to BRIM for.",
+    points: [
+      ["Carefully sourced", "Hand-slaughtered beef and chicken from BRIM-approved suppliers."],
+      ["No pork. No alcohol.", "A fully Halal kitchen and an alcohol-free place to enjoy your meal."],
+      ["The whole menu", "Burgers, sides and shakes, all prepared to the same Halal standard."],
+    ],
+  },
   menu: {
     eyebrow: "Halal assurance",
     title: "Every plate on this menu is Halal.",
@@ -62,8 +72,8 @@ export function HalalPromise({ variant }: { variant: Variant }) {
   const { eyebrow, title, body, points } = CONTENT[variant];
 
   return (
-    <section className="px-6 py-20 sm:py-24" aria-labelledby={`halal-${variant}`}>
-      <div className="mx-auto w-full max-w-6xl border-t border-ink/10 pt-16 sm:pt-20">
+    <section className={variant === "home" ? "bg-white px-6 py-12 text-ink sm:py-16" : "px-6 py-20 sm:py-24"} aria-labelledby={`halal-${variant}`}>
+      <div className={variant === "home" ? "mx-auto w-full max-w-7xl" : "mx-auto w-full max-w-6xl border-t border-ink/10 pt-16 sm:pt-20"}>
         <div className="grid gap-10 rounded-3xl bg-white p-8 ring-1 ring-ink/10 sm:p-12 lg:grid-cols-12 lg:gap-14">
           <div className="lg:col-span-4">
             <span className="grid h-20 w-20 place-items-center rounded-full bg-paper ring-1 ring-ink/10">
