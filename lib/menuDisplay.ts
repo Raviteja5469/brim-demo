@@ -68,15 +68,33 @@ const drink = (slug: string, name: string, image: string): MenuItem => ({
   price: 1.5,
 });
 
-const coolers: MenuItem = {
-  slug: "brim-coolers",
-  name: "BRIM Coolers",
-  description: "Bubble Gum, Pomegranate, Sour Apple, Mango and Iced Peach.",
+const photoItem = (slug: string, name: string, description: string, image: string): MenuItem => ({
+  slug,
+  name,
+  description,
   tags: ["sweet"],
-  image: "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.02.jpeg",
+  image,
   detailLink: false,
-  price: 3.5,
-};
+});
+
+// These are the individual photos supplied for the current UK drinks menu.
+// Keep cups and cans as separate items: a BRIM cooler is not interchangeable
+// with a canned soft drink.
+const photographedShakes: MenuItem[] = [
+  photoItem("mango-shake", "Mango Shake", "Creamy mango shake.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.02 (1).jpeg"),
+  photoItem("oreo-vanilla-shake", "Oreo Vanilla Shake", "Vanilla shake finished with Oreo.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.03.jpeg"),
+  photoItem("strawberry-shake", "Strawberry Shake", "Creamy strawberry shake.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.04 (1).jpeg"),
+  photoItem("chocolate-shake", "Chocolate Shake", "Creamy chocolate shake.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.04 (3).jpeg"),
+  photoItem("galaxy-caramel-shake", "Galaxy Caramel Shake", "Caramel shake topped with Galaxy chocolate.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.05.jpeg"),
+];
+
+const photographedCoolers: MenuItem[] = [
+  photoItem("mango-cooler", "Mango Cooler", "An ice-cold BRIM mango cooler.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.02.jpeg"),
+  photoItem("pomegranate-cooler", "Pomegranate Cooler", "An ice-cold BRIM pomegranate cooler.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.03 (1).jpeg"),
+  photoItem("sour-apple-cooler", "Sour Apple Cooler", "An ice-cold BRIM sour apple cooler.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.04.jpeg"),
+  photoItem("bubble-gum-cooler", "Bubble Gum Cooler", "An ice-cold BRIM bubble gum cooler.", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.04 (2).jpeg"),
+  drink("rio-tropical", "Rio Tropical", "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.03 (2).jpeg"),
+];
 
 export const DISPLAY_MENU: MenuCategory[] = [
   { id: "beef-burgers", name: "Beef Burgers", tagline: "Smashed beef, big flavour.", items: items(["brim-burger", "the-meltdown", "fiery-brimstone", "smashed-shrooms", "oklahoma-onion-smash", "bbq-rasher", "brim-maniac", "hawaiian-heaven"]) },
@@ -87,8 +105,8 @@ export const DISPLAY_MENU: MenuCategory[] = [
   { id: "brim-fries", name: "Brim Fries", tagline: "Skin-on, curly or piled high with toppings.", items: items(["skin-on-fries", "curly-fries", "sweet-potato-fries", "cheesy-fries", "commando-fries", "dynamite-fries", "loaded-box"]) },
   { id: "brim-tots", name: "BRIM Tots", tagline: "Crispy tots with plenty on top.", items: items(["cheesy-tots", "hot-tots", "loaded-tots"]) },
   { id: "brim-sides", name: "Brim Sides", tagline: "Extra crunch for every meal.", items: items(["volcanic-cheese-bites", "onion-rings", "mac-cheese-bites", "mozzarella-dippers"]) },
-  { id: "shakes-desserts", name: "Brim Shakes and Desserts", tagline: "Thick shakes and sweet finishes.", items: items(["classic-shakes", "brim-shakes", "brim-brownie-special"]) },
-  { id: "coolers-drinks", name: "Coolers and Drinks", tagline: "Cold cans and BRIM coolers.", items: [coolers, ...items(["drinks", "ice-tea"]), drink("coca-cola-zero", "Coca-Cola Zero", "/menu/deliveroo/cokezero.png"), drink("sprite", "Sprite", "/menu/deliveroo/sprite.png"), drink("fanta-lemon", "Fanta Lemon", "/menu/deliveroo/fanta-lemon.png"), drink("fanta-orange", "Fanta Orange", "/menu/deliveroo/fanta-orange.png")] },
+  { id: "shakes-desserts", name: "Brim Shakes and Desserts", tagline: "Thick shakes and sweet finishes.", items: [...photographedShakes, ...items(["brim-brownie-special"])] },
+  { id: "coolers-drinks", name: "Coolers and Drinks", tagline: "Iced BRIM coolers and cold cans.", items: [...photographedCoolers, drink("coca-cola-original", "Coca-Cola", "/menu/deliveroo/cocacola.png"), drink("coca-cola-zero", "Coca-Cola Zero", "/menu/deliveroo/cokezero.png"), drink("sprite", "Sprite", "/menu/deliveroo/sprite.png"), drink("fanta-lemon", "Fanta Lemon", "/menu/deliveroo/fanta-lemon.png"), drink("fanta-orange", "Fanta Orange", "/menu/deliveroo/fanta-orange.png")] },
 ];
 
 export function menuImage(item: MenuItem): string | undefined {
