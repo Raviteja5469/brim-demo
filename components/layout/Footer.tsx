@@ -18,7 +18,7 @@ export function Footer() {
       <div aria-hidden className="pointer-events-none absolute inset-0 opacity-20 [background-image:radial-gradient(ellipse_at_15%_95%,transparent_0_25%,rgba(255,255,255,0.12)_26%,transparent_27%),radial-gradient(ellipse_at_82%_90%,transparent_0_30%,rgba(255,255,255,0.1)_31%,transparent_32%)]" />
       <div className="relative mx-auto max-w-6xl">
         <Link href="/" aria-label={`${SITE.name} home`} className="mx-auto block w-fit">
-          <Image src={asset("/brand/brim-logo.png")} alt="BRIM Big Juicy Burgers" width={2339} height={1200} className="h-auto w-32 brightness-0 invert sm:w-40" />
+          <Image src={asset("/brand/brim-logo.png")} alt="BRIM Big Juicy Burgers" width={2339} height={1200} className="h-auto w-32 invert sm:w-40" />
         </Link>
         <div className="mt-12 grid gap-10 border-t border-white/15 pt-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-7">
           <FooterColumn title="Site Links" links={SITE_LINKS} />
