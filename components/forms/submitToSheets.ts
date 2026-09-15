@@ -9,6 +9,12 @@ export class FormSubmissionError extends Error {
   }
 }
 
+// The request itself resolves almost instantly (it's fire-and-forget below),
+// so the caller's "sending" state gets held open for at least this long —
+// otherwise the submit button's loading spinner flashes and disappears
+// before anyone can see it.
+const MIN_SENDING_MS = 450;
+
 export function submitToSheets(formType: WebsiteFormType, values: FormData) {
   const endpoint = process.env.NEXT_PUBLIC_FORM_AUTOMATION_URL?.trim();
   if (!endpoint) throw new FormSubmissionError();
@@ -32,4 +38,6 @@ export function submitToSheets(formType: WebsiteFormType, values: FormData) {
     // redirect is not readable from this static site, so do not show a false
     // failure after a row has been successfully written.
   });
+
+  return new Promise<void>((resolve) => setTimeout(resolve, MIN_SENDING_MS));
 }
