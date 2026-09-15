@@ -39,14 +39,14 @@ export function Navbar() {
           href="/"
           aria-label={`${SITE.name} home`}
           onClick={() => setOpen(false)}
-          className="block bg-ink transition-opacity hover:opacity-80"
+          className="block shrink-0 bg-ink px-1.5 py-1 transition-opacity hover:opacity-80"
         >
           <Image
-            src={asset("/brand/brim-logo.png")}
+            src={asset("/brand/brim-logo-nav.png")}
             alt="BRIM Big Juicy Burgers"
             width={2339}
-            height={1200}
-            className="h-auto w-32 invert"
+            height={1020}
+            className="h-auto w-36 invert"
           />
         </Link>
 
