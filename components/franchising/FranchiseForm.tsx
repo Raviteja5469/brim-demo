@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { FormSubmissionError, submitToSheets } from "@/components/forms/submitToSheets";
+import { submitToSheets } from "@/components/forms/submitToSheets";
 
 export function FranchiseForm() {
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "unconfigured" | "delivery">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "unconfigured">("idle");
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -13,8 +13,8 @@ export function FranchiseForm() {
       await submitToSheets("franchisee", new FormData(event.currentTarget));
       event.currentTarget.reset();
       setStatus("sent");
-    } catch (error) {
-      setStatus(error instanceof FormSubmissionError ? error.reason : "delivery");
+    } catch {
+      setStatus("unconfigured");
     }
   }
 
@@ -27,9 +27,8 @@ export function FranchiseForm() {
       <div className="mt-5"><Field label="Phone" name="phone" type="tel" autoComplete="tel" /></div>
       <label className="mt-5 block text-sm font-bold uppercase tracking-wide">Message<textarea name="message" required rows={7} className="mt-2 w-full rounded-lg border border-ink/20 bg-white px-4 py-3 text-base font-normal normal-case tracking-normal outline-none focus:border-ink" /></label>
       <button disabled={status === "sending"} type="submit" className="mt-6 rounded-xl bg-ink px-7 py-4 text-sm font-extrabold uppercase tracking-wide text-paper transition-transform hover:scale-[1.02] disabled:opacity-60">{status === "sending" ? "Sending…" : "Send enquiry"}</button>
-      {status === "sent" && <p className="mt-4 text-sm text-emerald-700" role="status">Thank you. Your franchise enquiry has been sent.</p>}
+      {status === "sent" && <p className="mt-4 text-sm text-emerald-700" role="status">Thank you. We&apos;ll get back to you within 1 hour.</p>}
       {status === "unconfigured" && <p className="mt-4 text-sm text-red-700" role="alert">The enquiry service is not configured yet. Please try again later.</p>}
-      {status === "delivery" && <p className="mt-4 text-sm text-red-700" role="alert">We couldn’t send your enquiry. Please check your connection and try again.</p>}
     </form>
   );
 }
