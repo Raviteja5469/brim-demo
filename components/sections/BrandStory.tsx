@@ -74,7 +74,7 @@ const MILESTONES: Milestone[] = [
     title: "The Great Britain Perimeter",
     subtitle: "Reaching nine premium boutiques",
     description:
-      "Brim scales aggressively while guarding artisan consistency. Flagships come online in Kentish Town, Luton, Hammersmith, Hemel Hempstead and Dalston — every site running identical temperature-probe iron calibrations and organic sourcing pipelines.",
+      "BRIM is growing across the UK while guarding the same standard at every counter—from Hemel Hempstead and Luton to Edgware Road and Edinburgh.",
     icon: "flag",
     metric: "9",
     metricLabel: "UK locations active",

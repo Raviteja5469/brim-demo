@@ -3,8 +3,8 @@ const UK_LOCATIONS = [
   { name: "Luton", address: "32 Kimpton Rd, Luton, LU2 0SX" },
   { name: "Hammersmith", address: "130 King St, London, W6 0QU" },
   { name: "High Barnet", address: "119 High Street, Barnet, EN5 5UZ" },
-  { name: "Dalston", address: "517 Kingsland Rd, London, E8 4AR" },
-  { name: "Kentish Town", address: "JML House, Regis Rd, London, NW5 3EW" },
+  { name: "Edgware Road", address: "171 Edgware Road, London, W2 2HR" },
+  { name: "Edinburgh", address: "99 Nicolson Street, Edinburgh, EH8 9BY" },
 ] as const;
 
 export function HomeLocations() {

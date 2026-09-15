@@ -3,14 +3,16 @@ import Link from "next/link";
 import { asset } from "@/lib/asset";
 
 const CATEGORIES = [
-  { name: "Burgers", image: "/menu/brim-burger.jpg", href: "/menu#cat-burgers" },
-  { name: "Hot Dogs", image: "/menu/classic-hot-dog.jpg", href: "/menu#cat-hot-dogs" },
-  { name: "Loaded Fries", image: "/menu/loaded-box.jpg", href: "/menu#cat-fries" },
-  { name: "Wraps", image: "/menu/brim-sando.jpg", href: "/menu#cat-sandos" },
-  { name: "Brim Junior", image: "/menu/chicken-little.jpg", href: "/menu#cat-jr-brim" },
-  { name: "Sips and Scoops", image: "/menu/brim-shakes.jpg", href: "/menu#cat-shakes" },
-  { name: "Desserts", image: "/menu/san-sabastian-cheesecake.jpg", href: "/menu#cat-desserts" },
-  { name: "Naked Box", image: "/menu/loaded-tots.jpg", href: "/menu#cat-brim-box" },
+  { name: "Beef Burgers", image: "/menu/deliveroo/Brim-Burger.png", href: "/menu#cat-beef-burgers" },
+  { name: "Chicken Burgers", image: "/menu/deliveroo/THE-CHICKEN-RUN.png", href: "/menu#cat-chicken-burgers" },
+  { name: "Wings and Tenders", image: "/menu/deliveroo/wings.png", href: "/menu#cat-wings-tenders" },
+  { name: "Sandos", image: "/menu/deliveroo/big-&-juicy-sando.png", href: "/menu#cat-sandos" },
+  { name: "Hot Dogs", image: "/menu/deliveroo/brim-classic-hotdog.png", href: "/menu#cat-hot-dogs" },
+  { name: "Brim Fries", image: "/menu/deliveroo/DYNAMITE-FRIES.png", href: "/menu#cat-brim-fries" },
+  { name: "BRIM Tots", image: "/menu/deliveroo/CHEESY-TOTS.png", href: "/menu#cat-brim-tots" },
+  { name: "Brim Sides", image: "/menu/deliveroo/VolcanicCheeseBites.png", href: "/menu#cat-brim-sides" },
+  { name: "Brim Shakes and Desserts", image: "/menu/deliveroo/LotusMilk-shake.png", href: "/menu#cat-shakes-desserts" },
+  { name: "Coolers and Drinks", image: "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.02.jpeg", href: "/menu#cat-coolers-drinks" },
 ] as const;
 
 export function HomeCategories() {
@@ -25,7 +27,7 @@ export function HomeCategories() {
           {CATEGORIES.map((category) => (
             <Link key={category.name} href={category.href} className="group overflow-hidden rounded-lg border border-ink/15 bg-white transition-transform duration-300 hover:-translate-y-1">
               <div className="relative aspect-[1.08] overflow-hidden bg-ink">
-                <Image src={asset(category.image)} alt={category.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                <Image src={asset(category.image)} alt={category.name} fill sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw" className="object-contain p-2 transition-transform duration-500 group-hover:scale-105" />
               </div>
               <p className="px-3 py-4 text-center font-display text-lg uppercase leading-none sm:text-2xl">{category.name}</p>
             </Link>

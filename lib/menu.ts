@@ -29,6 +29,10 @@ export interface MenuItem {
   spice?: SpiceLevel;
   /** Optional product shot at /public/menu/<slug>.jpg (placeholder if absent). */
   image?: string;
+  /** The current price when supplied by the official menu artwork. */
+  price?: number;
+  /** Cards without a product page stay visually informational. */
+  detailLink?: boolean;
   /** Larger, inverted (black) card for hero items. */
   featured?: boolean;
   /** Use a fixed, shorter image crop instead of the grow-to-fill one, so the
