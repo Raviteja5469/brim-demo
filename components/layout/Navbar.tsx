@@ -7,10 +7,12 @@
 // To let it scroll away with the page instead, swap the `fixed inset-x-0 top-0`
 // on <header> for `relative`, and drop the matching top padding on the pages
 // (they currently clear a fixed bar).
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NAV_LINKS, SITE } from "@/lib/site";
+import { asset } from "@/lib/asset";
 
 // The bar leads with an explicit Home link, so the wordmark is branding rather
 // than the only way back.
@@ -37,9 +39,15 @@ export function Navbar() {
           href="/"
           aria-label={`${SITE.name} home`}
           onClick={() => setOpen(false)}
-          className="bg-ink px-3.5 py-2 font-display text-2xl uppercase leading-none tracking-tight text-paper transition-opacity hover:opacity-80 sm:text-[1.75rem]"
+          className="block bg-ink transition-opacity hover:opacity-80"
         >
-          {SITE.shortName}
+          <Image
+            src={asset("/brand/brim-logo.png")}
+            alt="BRIM Big Juicy Burgers"
+            width={2339}
+            height={1200}
+            className="h-auto w-32 invert"
+          />
         </Link>
 
         {/* Desktop links */}
