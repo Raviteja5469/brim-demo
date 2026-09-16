@@ -9,7 +9,7 @@ const SLIDES = [
     eyebrow: "Smashed beef · cheese stacked",
     title: "Oklahoma|all the way.",
     copy: "A double smashed beef burger, seasoned fries and a BRIM shake—built for a proper meal.",
-    image: "/hero/brim-oklahoma-hero.png",
+    image: "/hero/brim-oklahoma-hero.webp",
     alt: "BRIM Oklahoma-style smash burger with branded fries and milkshake",
     imagePosition: "object-[64%_center]",
   },
@@ -17,7 +17,7 @@ const SLIDES = [
     eyebrow: "Smashed · halal · never frozen",
     title: "Big flavour.|Fully Brim.",
     copy: "Freshly smashed burgers, loaded fries and bold flavours—made for a proper meal.",
-    image: "/hero/brim-meal-hero.png",
+    image: "/hero/brim-meal-hero.webp",
     alt: "BRIM smash burger, fries and cola",
     imagePosition: "object-[62%_center]",
   },
@@ -25,7 +25,7 @@ const SLIDES = [
     eyebrow: "Crispy · cheesy · no shortcuts",
     title: "Loaded to|the Brim.",
     copy: "Golden fries, melted cheese and every topping worth getting stuck into.",
-    image: "/hero/brim-loaded-hero-v2.png",
+    image: "/hero/brim-loaded-hero-v2.webp",
     alt: "BRIM Box and Dynamite Fries with a BRIM smash burger",
     imagePosition: "object-[65%_center]",
   },
@@ -33,7 +33,7 @@ const SLIDES = [
     eyebrow: "Golden crunch · proper bite",
     title: "Crunch meets|juicy.",
     copy: "Crispy chicken, fresh toppings and a burger built to disappear fast.",
-    image: "/hero/brim-chicken-hero.png",
+    image: "/hero/brim-chicken-hero.webp",
     alt: "Crispy chicken burger with fries and cola",
     imagePosition: "object-[66%_center]",
   },
@@ -41,7 +41,7 @@ const SLIDES = [
     eyebrow: "Thick shakes · sweet finish",
     title: "Save room|for more.",
     copy: "Big shakes and sweet finishes for the part of the meal you never skip.",
-    image: "/hero/brim-shakes-hero-v2.png",
+    image: "/hero/brim-shakes-hero-v2.webp",
     alt: "BRIM mango, strawberry and chocolate shakes with brownie dessert",
     imagePosition: "object-[64%_center]",
   },
@@ -65,6 +65,7 @@ export function HeroVideo() {
   }, [isPaused]);
 
   const slide = SLIDES[activeSlide];
+  const nextSlide = (activeSlide + 1) % SLIDES.length;
 
   return (
     <section
@@ -79,8 +80,11 @@ export function HeroVideo() {
       }}
       className="relative isolate h-dvh min-h-[42rem] overflow-hidden bg-[#ead4af] text-ink"
     >
-      {SLIDES.map((item, index) => (
-        <div
+      {SLIDES.map((item, index) => {
+        if (index !== activeSlide && index !== nextSlide) return null;
+
+        return (
+          <div
           key={item.image}
           aria-hidden={index !== activeSlide}
           className={`absolute inset-0 transition-[opacity,transform] duration-700 ease-out motion-reduce:transition-none ${
@@ -88,21 +92,23 @@ export function HeroVideo() {
               ? "scale-100 opacity-100"
               : "pointer-events-none scale-[1.035] opacity-0"
           }`}
-        >
-          <Image
-            src={item.image}
-            alt=""
-            fill
-            priority={index === 0}
-            sizes="100vw"
-            className={`object-cover ${item.imagePosition}`}
-          />
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,235,0.98)_0%,rgba(255,248,235,0.9)_31%,rgba(255,248,235,0.3)_56%,transparent_75%)]"
-          />
-        </div>
-      ))}
+          >
+            <Image
+              src={item.image}
+              alt=""
+              fill
+              preload={index === activeSlide}
+              loading={index === activeSlide ? "eager" : "lazy"}
+              sizes="100vw"
+              className={`object-cover ${item.imagePosition}`}
+            />
+            <div
+              aria-hidden
+              className="absolute inset-0 bg-[linear-gradient(90deg,rgba(255,248,235,0.98)_0%,rgba(255,248,235,0.9)_31%,rgba(255,248,235,0.3)_56%,transparent_75%)]"
+            />
+          </div>
+        );
+      })}
 
       <div className="relative z-10 mx-auto flex h-full max-w-[120rem] items-center px-6 pb-10 pt-24 sm:px-12 sm:pb-14 lg:px-[clamp(3rem,8vw,10rem)]">
         <div key={slide.image} className="brim-hero-copy max-w-xl">
