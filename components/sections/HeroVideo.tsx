@@ -6,6 +6,14 @@ import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
+    eyebrow: "Smashed beef · cheese stacked",
+    title: "Oklahoma|all the way.",
+    copy: "A double smashed beef burger, seasoned fries and a BRIM shake—built for a proper meal.",
+    image: "/hero/brim-oklahoma-hero.png",
+    alt: "BRIM Oklahoma-style smash burger with branded fries and milkshake",
+    imagePosition: "object-[64%_center]",
+  },
+  {
     eyebrow: "Smashed · halal · never frozen",
     title: "Big flavour.|Fully Brim.",
     copy: "Freshly smashed burgers, loaded fries and bold flavours—made for a proper meal.",
@@ -35,14 +43,6 @@ const SLIDES = [
     copy: "Big shakes and sweet finishes for the part of the meal you never skip.",
     image: "/hero/brim-shakes-hero-v2.png",
     alt: "BRIM mango, strawberry and chocolate shakes with brownie dessert",
-    imagePosition: "object-[64%_center]",
-  },
-  {
-    eyebrow: "Smashed beef · cheese stacked",
-    title: "Oklahoma|all the way.",
-    copy: "A double smashed beef burger, seasoned fries and a BRIM shake—built for a proper meal.",
-    image: "/hero/brim-oklahoma-hero.png",
-    alt: "BRIM Oklahoma-style smash burger with branded fries and milkshake",
     imagePosition: "object-[64%_center]",
   },
 ] as const;
