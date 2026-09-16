@@ -37,6 +37,14 @@ const SLIDES = [
     alt: "BRIM mango, strawberry and chocolate shakes with brownie dessert",
     imagePosition: "object-[64%_center]",
   },
+  {
+    eyebrow: "Smashed beef · cheese stacked",
+    title: "Oklahoma|all the way.",
+    copy: "A double smashed beef burger, seasoned fries and a BRIM shake—built for a proper meal.",
+    image: "/hero/brim-oklahoma-hero.png",
+    alt: "BRIM Oklahoma-style smash burger with branded fries and milkshake",
+    imagePosition: "object-[64%_center]",
+  },
 ] as const;
 
 const SLIDE_DURATION = 6000;
@@ -120,7 +128,7 @@ export function HeroVideo() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-6 z-20 flex items-center gap-2 sm:bottom-10 sm:left-12 lg:left-[clamp(3rem,8vw,10rem)]">
+      <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 sm:bottom-10">
         {SLIDES.map((item, index) => (
           <button
             key={item.image}
