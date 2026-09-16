@@ -17,8 +17,8 @@ const SLIDES = [
     eyebrow: "Crispy · cheesy · no shortcuts",
     title: "Loaded to|the Brim.",
     copy: "Golden fries, melted cheese and every topping worth getting stuck into.",
-    image: "/hero/brim-loaded-hero.png",
-    alt: "Loaded fries with cheese and toppings",
+    image: "/hero/brim-loaded-hero-v2.png",
+    alt: "BRIM Box and Dynamite Fries with a BRIM smash burger",
     imagePosition: "object-[65%_center]",
   },
   {
@@ -33,8 +33,8 @@ const SLIDES = [
     eyebrow: "Thick shakes · sweet finish",
     title: "Save room|for more.",
     copy: "Big shakes and sweet finishes for the part of the meal you never skip.",
-    image: "/hero/brim-shakes-hero.png",
-    alt: "Chocolate and strawberry milkshakes",
+    image: "/hero/brim-shakes-hero-v2.png",
+    alt: "BRIM mango, strawberry and chocolate shakes with brownie dessert",
     imagePosition: "object-[64%_center]",
   },
 ] as const;
