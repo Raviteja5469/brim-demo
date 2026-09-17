@@ -3,16 +3,16 @@ import Link from "next/link";
 import { asset } from "@/lib/asset";
 
 const CATEGORIES = [
-  { name: "Beef Burgers", image: "/menu/deliveroo/Brim-Burger.png", href: "/menu#cat-beef-burgers" },
-  { name: "Chicken Burgers", image: "/menu/deliveroo/THE-CHICKEN-RUN.png", href: "/menu#cat-chicken-burgers" },
-  { name: "Wings and Tenders", image: "/menu/deliveroo/wings.png", href: "/menu#cat-wings-tenders" },
-  { name: "Sandos", image: "/menu/deliveroo/big-&-juicy-sando.png", href: "/menu#cat-sandos" },
-  { name: "Hot Dogs", image: "/menu/deliveroo/brim-classic-hotdog.png", href: "/menu#cat-hot-dogs" },
-  { name: "Brim Fries", image: "/menu/deliveroo/DYNAMITE-FRIES.png", href: "/menu#cat-brim-fries" },
-  { name: "BRIM Tots", image: "/menu/deliveroo/CHEESY-TOTS.png", href: "/menu#cat-brim-tots" },
-  { name: "Brim Sides", image: "/menu/deliveroo/VolcanicCheeseBites.png", href: "/menu#cat-brim-sides" },
-  { name: "Brim Shakes and Desserts", image: "/menu/deliveroo/LotusMilk-shake.png", href: "/menu#cat-shakes-desserts" },
-  { name: "Coolers and Drinks", image: "/menu/drinks/WhatsApp Image 2026-09-15 at 17.06.02.jpeg", href: "/menu#cat-coolers-drinks" },
+  { name: "Beef Burgers", image: "/menu/deliveroo/Brim-Burger.webp", href: "/menu#cat-beef-burgers" },
+  { name: "Chicken Burgers", image: "/menu/deliveroo/THE-CHICKEN-RUN.webp", href: "/menu#cat-chicken-burgers" },
+  { name: "Wings and Tenders", image: "/menu/deliveroo/wings.webp", href: "/menu#cat-wings-tenders" },
+  { name: "Sandos", image: "/menu/deliveroo/big-&-juicy-sando.webp", href: "/menu#cat-sandos" },
+  { name: "Hot Dogs", image: "/menu/deliveroo/brim-classic-hotdog.webp", href: "/menu#cat-hot-dogs" },
+  { name: "Brim Fries", image: "/menu/deliveroo/DYNAMITE-FRIES.webp", href: "/menu#cat-brim-fries" },
+  { name: "BRIM Tots", image: "/menu/deliveroo/CHEESY-TOTS.webp", href: "/menu#cat-brim-tots" },
+  { name: "Brim Sides", image: "/menu/deliveroo/VolcanicCheeseBites.webp", href: "/menu#cat-brim-sides" },
+  { name: "Brim Shakes and Desserts", image: "/menu/deliveroo/LotusMilk-shake.webp", href: "/menu#cat-shakes-desserts" },
+  { name: "Coolers and Drinks", image: "/menu/drinks/brim-mango-cooler-cutout.webp", href: "/menu#cat-coolers-drinks" },
 ] as const;
 
 export function HomeCategories() {

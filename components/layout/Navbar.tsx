@@ -10,13 +10,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { NAV_LINKS, SITE } from "@/lib/site";
 import { asset } from "@/lib/asset";
 
 // The bar leads with an explicit Home link, so the wordmark is branding rather
 // than the only way back.
 const LINKS = [{ label: "Home", href: "/" }, ...NAV_LINKS];
+const MENU_WARMUP_IMAGES = [
+  "/menu/deliveroo/Brim-Burger.webp",
+  "/menu/deliveroo/THE-MELTDOWN.webp",
+  "/menu/deliveroo/FIERY-BRIMSTONE-BEEF.webp",
+];
 
 // next.config sets trailingSlash, so usePathname() hands back "/menu/" — strip
 // it before matching or the active state never lands.
@@ -26,7 +31,17 @@ const normalize = (path: string) =>
 export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const menuAssetsPreloaded = useRef(false);
   const current = normalize(pathname);
+
+  const preloadMenuAssets = () => {
+    if (menuAssetsPreloaded.current) return;
+    menuAssetsPreloaded.current = true;
+    MENU_WARMUP_IMAGES.forEach((imageSrc) => {
+      const image = new window.Image();
+      image.src = asset(imageSrc);
+    });
+  };
 
   const isActive = (href: string) =>
     href === "/" ? current === "/" : current === href || current.startsWith(`${href}/`);
@@ -39,14 +54,19 @@ export function Navbar() {
           href="/"
           aria-label={`${SITE.name} home`}
           onClick={() => setOpen(false)}
-          className="block shrink-0 bg-ink px-1.5 py-1 transition-opacity hover:opacity-80"
+          className="relative block aspect-[2339/1020] w-36 shrink-0 overflow-hidden bg-ink transition-opacity hover:opacity-80"
         >
+          <span aria-hidden className="absolute inset-0 flex flex-col items-center justify-center bg-ink pt-0.5 text-paper">
+            <strong className="font-display text-[2.45rem] leading-[0.76] tracking-[-0.08em]">BRIM</strong>
+            <span className="mt-1 text-[0.45rem] font-medium tracking-[0.19em]">BIG JUICY BURGERS</span>
+          </span>
           <Image
-            src={asset("/brand/brim-logo-nav.png")}
-            alt="BRIM Big Juicy Burgers"
-            width={2339}
-            height={1020}
-            className="h-auto w-36 invert"
+            src={asset("/brand/brim-logo-nav.webp")}
+            alt=""
+            fill
+            preload
+            sizes="144px"
+            className="object-contain invert"
           />
         </Link>
 
@@ -59,6 +79,8 @@ export function Navbar() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
+                    onMouseEnter={link.href === "/menu" ? preloadMenuAssets : undefined}
+                    onFocus={link.href === "/menu" ? preloadMenuAssets : undefined}
                     aria-current={active ? "page" : undefined}
                     className="relative block py-1 text-sm font-extrabold uppercase tracking-[0.12em] text-ink transition-opacity hover:opacity-55"
                   >

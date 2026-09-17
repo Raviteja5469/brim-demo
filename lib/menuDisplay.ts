@@ -110,5 +110,6 @@ export const DISPLAY_MENU: MenuCategory[] = [
 ];
 
 export function menuImage(item: MenuItem): string | undefined {
-  return IMAGE_BY_SLUG[item.slug] ?? item.image;
+  const image = IMAGE_BY_SLUG[item.slug] ?? item.image;
+  return image?.replace(/\.(png|jpe?g)$/i, ".webp");
 }
