@@ -10,8 +10,6 @@ export const SITE = {
   contact: {
     email: "info@brimburgers.com",
     franchiseEmail: "franchise@brimburgers.com",
-    phone: "+44 7867 790156",
-    phoneHours: "Office hours · 9–5",
     address: "1c Amberside, Wood Lane, Hemel Hempstead, Hertfordshire, United Kingdom, HP2 4TP",
   },
 } as const;
